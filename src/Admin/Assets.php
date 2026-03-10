@@ -16,7 +16,10 @@ class Assets {
 	public function enqueue( string $hook ): void {
 		$screen = get_current_screen();
 
-		if ( ! $screen || 'light_popup' !== $screen->post_type ) {
+		$is_lp_screen = $screen && 'light_popup' === $screen->post_type;
+		$is_templates = $screen && 'light_popup_page_light-popup-templates' === $screen->id;
+
+		if ( ! $is_lp_screen && ! $is_templates ) {
 			return;
 		}
 

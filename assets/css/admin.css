@@ -132,3 +132,57 @@
 	text-decoration: underline;
 }
 
+
+/* -----------------------------------------------
+   Templates page
+----------------------------------------------- */
+
+.lp-templates-page__intro {
+	color: #646970;
+	margin-bottom: 24px;
+}
+
+.lp-template-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	gap: 16px;
+	margin-bottom: 32px;
+}
+
+.lp-template-card {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.lp-template-card__body {
+	padding: 16px;
+	flex: 1;
+}
+
+.lp-template-card__title {
+	margin: 0 0 6px;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.lp-template-card__desc {
+	color: #646970;
+	font-size: 13px;
+	margin: 0;
+}
+
+.lp-template-card__footer {
+	padding: 12px 16px;
+	border-top: 1px solid #f0f0f1;
+	background: #f9f9f9;
+}
+
+.lp-templates-page__divider {
+	margin: 32px 0;
+	border: none;
+	border-top: 1px solid #dcdcde;
+}

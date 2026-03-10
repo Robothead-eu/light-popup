@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Robothead\LightPopup\Admin\Assets;
 use Robothead\LightPopup\Admin\ListTable;
 use Robothead\LightPopup\Admin\Menu;
+use Robothead\LightPopup\Admin\Templates;
 use Robothead\LightPopup\Admin\SettingsMetaBox;
 use Robothead\LightPopup\Admin\SettingsSaver;
 use Robothead\LightPopup\Domain\PopupPostType;
@@ -21,7 +22,9 @@ class Plugin {
 		( new PopupPostType() )->register();
 
 		if ( is_admin() ) {
-			( new Menu() )->register();
+			$templates = new Templates();
+			$templates->register();
+			( new Menu( $templates ) )->register();
 			( new SettingsMetaBox() )->register();
 			( new SettingsSaver() )->register();
 			( new Assets() )->register();

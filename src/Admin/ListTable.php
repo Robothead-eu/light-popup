@@ -112,7 +112,27 @@ class ListTable {
 			return $actions;
 		}
 
-		// Remove the toggle from row actions — it's now in the Status column.
+		$duplicate_url = add_query_arg(
+			[
+				'action'   => 'lp_duplicate',
+				'post_id'  => $post->ID,
+				'_wpnonce' => wp_create_nonce( 'lp_duplicate_' . $post->ID ),
+			],
+			admin_url( 'admin.php' )
+		);
+
+		$export_url = add_query_arg(
+			[
+				'action'   => 'lp_export',
+				'post_id'  => $post->ID,
+				'_wpnonce' => wp_create_nonce( 'lp_export_' . $post->ID ),
+			],
+			admin_url( 'admin.php' )
+		);
+
+		$actions['lp_duplicate'] = '<a href="' . esc_url( $duplicate_url ) . '">' . esc_html__( 'Duplicate', 'light-popup' ) . '</a>';
+		$actions['lp_export']    = '<a href="' . esc_url( $export_url ) . '">' . esc_html__( 'Export', 'light-popup' ) . '</a>';
+
 		return $actions;
 	}
 

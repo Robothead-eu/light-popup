@@ -8,6 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Menu {
 
+	private Templates $templates;
+
+	public function __construct( Templates $templates ) {
+		$this->templates = $templates;
+	}
+
 	public function register(): void {
 		add_action( 'admin_menu', [ $this, 'add_menu' ] );
 	}
@@ -37,6 +43,15 @@ class Menu {
 			__( 'Add New', 'light-popup' ),
 			'manage_options',
 			'post-new.php?post_type=light_popup'
+		);
+
+		add_submenu_page(
+			'edit.php?post_type=light_popup',
+			__( 'Templates', 'light-popup' ),
+			__( 'Templates', 'light-popup' ),
+			'manage_options',
+			'light-popup-templates',
+			[ $this->templates, 'render_page' ]
 		);
 	}
 }
