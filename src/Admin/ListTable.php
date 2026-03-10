@@ -138,15 +138,6 @@ class ListTable {
 	}
 
 	public function render_list_header(): void {
-		$screen = get_current_screen();
-		if ( ! $screen || 'light_popup' !== $screen->post_type || 'edit' !== $screen->base ) {
-			return;
-		}
-		?>
-		<div class="lp-list-header">
-			<p><?php esc_html_e( 'Light Popup loads scripts only on pages with an active popup — zero performance impact everywhere else.', 'light-popup' ); ?></p>
-		</div>
-		<?php
 	}
 
 	public function render_list_footer(): void {
