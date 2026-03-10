@@ -13,6 +13,8 @@ class ListTable {
 		add_action( 'manage_light_popup_posts_custom_column', [ $this, 'render_column' ], 10, 2 );
 		add_filter( 'post_row_actions', [ $this, 'add_row_actions' ], 10, 2 );
 		add_action( 'admin_action_lp_toggle_enabled', [ $this, 'handle_toggle' ] );
+		add_action( 'all_admin_notices', [ $this, 'render_list_header' ] );
+		add_action( 'admin_footer', [ $this, 'render_list_footer' ] );
 	}
 
 	/**
@@ -20,7 +22,6 @@ class ListTable {
 	 * @return array<string, string>
 	 */
 	public function add_columns( array $columns ): array {
-		// Insert after title.
 		$new = [];
 		foreach ( $columns as $key => $label ) {
 			$new[ $key ] = $label;
@@ -38,16 +39,35 @@ class ListTable {
 		switch ( $column ) {
 			case 'lp_status':
 				$enabled = get_post_meta( $post_id, '_lp_enabled', true );
+				$nonce   = wp_create_nonce( 'lp_toggle_' . $post_id );
+				$url     = add_query_arg(
+					[
+						'action'   => 'lp_toggle_enabled',
+						'post_id'  => $post_id,
+						'_wpnonce' => $nonce,
+					],
+					admin_url( 'admin.php' )
+				);
 				if ( '1' === $enabled ) {
-					echo '<span style="color:#0a7227;font-weight:600;">' . esc_html__( 'Active', 'light-popup' ) . '</span>';
+					printf(
+						'<a href="%s" class="lp-toggle lp-toggle--active" title="%s"><span class="lp-toggle__dot"></span>%s</a>',
+						esc_url( $url ),
+						esc_attr__( 'Click to disable', 'light-popup' ),
+						esc_html__( 'Active', 'light-popup' )
+					);
 				} else {
-					echo '<span style="color:#8c8f94;">' . esc_html__( 'Inactive', 'light-popup' ) . '</span>';
+					printf(
+						'<a href="%s" class="lp-toggle lp-toggle--inactive" title="%s"><span class="lp-toggle__dot"></span>%s</a>',
+						esc_url( $url ),
+						esc_attr__( 'Click to enable', 'light-popup' ),
+						esc_html__( 'Inactive', 'light-popup' )
+					);
 				}
 				break;
 
 			case 'lp_trigger':
-				$type  = get_post_meta( $post_id, '_lp_trigger_type', true );
-				$value = get_post_meta( $post_id, '_lp_trigger_value', true );
+				$type   = get_post_meta( $post_id, '_lp_trigger_type', true );
+				$value  = get_post_meta( $post_id, '_lp_trigger_value', true );
 				$labels = [
 					'time_delay'   => __( 'Time delay', 'light-popup' ),
 					'scroll_depth' => __( 'Scroll depth', 'light-popup' ),
@@ -63,7 +83,7 @@ class ListTable {
 				break;
 
 			case 'lp_frequency':
-				$freq = get_post_meta( $post_id, '_lp_frequency', true );
+				$freq   = get_post_meta( $post_id, '_lp_frequency', true );
 				$labels = [
 					'always'  => __( 'Always', 'light-popup' ),
 					'session' => __( 'Per session', 'light-popup' ),
@@ -92,24 +112,7 @@ class ListTable {
 			return $actions;
 		}
 
-		$enabled = get_post_meta( $post->ID, '_lp_enabled', true );
-		$nonce   = wp_create_nonce( 'lp_toggle_' . $post->ID );
-
-		$url = add_query_arg(
-			[
-				'action'   => 'lp_toggle_enabled',
-				'post_id'  => $post->ID,
-				'_wpnonce' => $nonce,
-			],
-			admin_url( 'admin.php' )
-		);
-
-		if ( '1' === $enabled ) {
-			$actions['lp_toggle'] = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Disable', 'light-popup' ) . '</a>';
-		} else {
-			$actions['lp_toggle'] = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Enable', 'light-popup' ) . '</a>';
-		}
-
+		// Remove the toggle from row actions — it's now in the Status column.
 		return $actions;
 	}
 
@@ -132,5 +135,35 @@ class ListTable {
 
 		wp_safe_redirect( admin_url( 'edit.php?post_type=light_popup' ) );
 		exit;
+	}
+
+	public function render_list_header(): void {
+		$screen = get_current_screen();
+		if ( ! $screen || 'light_popup' !== $screen->post_type || 'edit' !== $screen->base ) {
+			return;
+		}
+		?>
+		<div class="lp-list-header">
+			<p><?php esc_html_e( 'Light Popup loads scripts only on pages with an active popup — zero performance impact everywhere else.', 'light-popup' ); ?></p>
+		</div>
+		<?php
+	}
+
+	public function render_list_footer(): void {
+		$screen = get_current_screen();
+		if ( ! $screen || 'light_popup' !== $screen->post_type || 'edit' !== $screen->base ) {
+			return;
+		}
+		?>
+		<div class="lp-list-footer">
+			<?php
+			printf(
+				/* translators: %s: Robothead link */
+				esc_html__( 'Built by %s', 'light-popup' ),
+				'<a href="https://robothead.eu" target="_blank" rel="noopener">Robothead</a>'
+			);
+			?>
+		</div>
+		<?php
 	}
 }

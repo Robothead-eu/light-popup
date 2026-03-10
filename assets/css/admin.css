@@ -1,3 +1,7 @@
+/* -----------------------------------------------
+   Sidebar settings panel
+----------------------------------------------- */
+
 .lp-settings hr {
 	margin: 12px 0;
 	border: none;
@@ -55,3 +59,90 @@
 	font-size: 12px;
 	resize: vertical;
 }
+
+/* -----------------------------------------------
+   List table — column widths
+----------------------------------------------- */
+
+.column-lp_status    { width: 90px; }
+.column-lp_trigger   { width: 160px; }
+.column-lp_frequency { width: 100px; }
+.column-lp_shortcode { width: 240px; }
+
+/* -----------------------------------------------
+   List table — status toggle
+----------------------------------------------- */
+
+.lp-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 13px;
+}
+
+.lp-toggle:hover {
+	text-decoration: underline;
+}
+
+.lp-toggle__dot {
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.lp-toggle--active {
+	color: #0a7227;
+}
+
+.lp-toggle--active .lp-toggle__dot {
+	background: #0a7227;
+}
+
+.lp-toggle--inactive {
+	color: #8c8f94;
+}
+
+.lp-toggle--inactive .lp-toggle__dot {
+	background: #c3c4c7;
+}
+
+/* -----------------------------------------------
+   List screen — header description
+----------------------------------------------- */
+
+.lp-list-header {
+	margin: 0 0 16px;
+}
+
+.lp-list-header p {
+	color: #646970;
+	font-size: 13px;
+	margin: 0;
+}
+
+/* -----------------------------------------------
+   List screen — footer credit
+----------------------------------------------- */
+
+.lp-list-footer {
+	margin-top: 24px;
+	padding-top: 12px;
+	border-top: 1px solid #dcdcde;
+	font-size: 12px;
+	color: #8c8f94;
+}
+
+.lp-list-footer a {
+	color: #8c8f94;
+	text-decoration: none;
+}
+
+.lp-list-footer a:hover {
+	color: #3c434a;
+	text-decoration: underline;
+}
+

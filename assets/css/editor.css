@@ -1,0 +1,18 @@
+/* Applied inside the block editor iframe for light_popup CPT.
+   Gives the canvas a grey background so the content area feels
+   like a popup preview rather than a blank document. */
+
+body {
+	background: #dcdcde;
+	padding: 0 !important;
+}
+
+.is-root-container {
+	background: #ffffff;
+	max-width: 560px;
+	margin: 40px auto !important;
+	padding: 32px !important;
+	border-radius: 6px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+	min-height: 80px;
+}
