@@ -1,0 +1,25 @@
+# Ignore everything starting with a dot
+.*
+
+# Except these
+!.gitignore
+
+# Composer
+/vendor/
+composer.lock
+
+# OS
+Thumbs.db
+
+# IDE
+*.swp
+*.swo
+
+# WordPress
+*.log
+
+# Build
+/node_modules/
+
+# Docs (internal only)
+/docs/

@@ -1,0 +1,122 @@
+:root {
+	--lp-backdrop: rgba(0, 0, 0, 0.5);
+	--lp-bg: #ffffff;
+	--lp-radius: 8px;
+	--lp-max-width: 560px;
+	--lp-padding: 2rem;
+	--lp-z-index: 100000;
+}
+
+/* Backdrop */
+.lp-popup::backdrop {
+	background: var(--lp-backdrop);
+}
+
+/* Dialog base */
+.lp-popup {
+	position: fixed;
+	inset: 0;
+	margin: auto;
+	padding: 0;
+	width: min(var(--lp-max-width), 92vw);
+	max-height: 85vh;
+	border: none;
+	border-radius: var(--lp-radius);
+	background: var(--lp-bg);
+	box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+	z-index: var(--lp-z-index);
+	overflow: hidden;
+	/* Hidden state */
+	opacity: 0;
+	transform: scale(0.96);
+	transition: opacity 0.2s ease, transform 0.2s ease, display 0.2s ease allow-discrete;
+}
+
+/* Open state */
+.lp-popup[open] {
+	opacity: 1;
+	transform: scale(1);
+}
+
+/* Animate in from hidden — required for starting-style support */
+@starting-style {
+	.lp-popup[open] {
+		opacity: 0;
+		transform: scale(0.96);
+	}
+}
+
+/* Inner */
+.lp-popup__inner {
+	position: relative;
+	padding: var(--lp-padding);
+	overflow-y: auto;
+	max-height: 85vh;
+}
+
+/* Close button */
+.lp-popup__close {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	width: 44px;
+	height: 44px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: transparent;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 22px;
+	line-height: 1;
+	color: #666;
+	padding: 0;
+	transition: color 0.15s, background 0.15s;
+}
+
+.lp-popup__close:hover,
+.lp-popup__close:focus-visible {
+	color: #111;
+	background: rgba(0, 0, 0, 0.06);
+	outline: 2px solid currentColor;
+	outline-offset: -2px;
+}
+
+/* Content */
+.lp-popup__content {
+	margin-top: 4px;
+}
+
+.lp-popup__content > *:first-child {
+	margin-top: 0;
+}
+
+/* GDPR */
+.lp-popup__gdpr {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	margin-top: 16px;
+	font-size: 13px;
+	color: #555;
+	cursor: pointer;
+}
+
+.lp-popup__gdpr input[type="checkbox"] {
+	flex-shrink: 0;
+	margin-top: 2px;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+	.lp-popup {
+		width: 90vw;
+		max-height: 70vh;
+	}
+
+	.lp-popup__inner {
+		max-height: 70vh;
+		padding: 1.25rem;
+	}
+}

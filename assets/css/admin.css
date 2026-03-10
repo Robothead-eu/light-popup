@@ -1,0 +1,57 @@
+.lp-settings hr {
+	margin: 12px 0;
+	border: none;
+	border-top: 1px solid #dcdcde;
+}
+
+.lp-settings__heading {
+	font-weight: 600;
+	margin: 0 0 6px;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: #3c434a;
+}
+
+.lp-settings__section {
+	padding: 4px 0;
+}
+
+.lp-settings__label {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 13px;
+}
+
+.lp-settings__label--inline {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-bottom: 4px;
+}
+
+.lp-settings__label--mt {
+	margin-top: 10px;
+}
+
+.lp-settings__field {
+	margin-top: 6px;
+}
+
+.lp-settings .description {
+	font-size: 11px;
+	color: #646970;
+	margin: 2px 0 0;
+}
+
+.lp-settings select.widefat,
+.lp-settings input.widefat,
+.lp-settings textarea.widefat {
+	margin-top: 4px;
+}
+
+.lp-settings textarea.code {
+	font-family: Consolas, Monaco, monospace;
+	font-size: 12px;
+	resize: vertical;
+}
