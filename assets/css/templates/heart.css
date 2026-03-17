@@ -109,19 +109,82 @@
 	max-width: var(--lp-content-width);
 }
 
-/* Mobile adjustments for heart */
-@media (max-width: 767px) {
+/* Tablet adjustments for heart */
+@media (max-width: 900px) {
 	.lp-popup--heart {
-		--lp-max-width: 380px;
-	}
-
-	.lp-popup--heart .lp-popup__inner {
-		padding: calc(var(--lp-inner-padding) + 32px) calc(var(--lp-inner-padding) * 0.75) var(--lp-inner-padding);
-		min-height: 320px;
+		--lp-content-width: 280px;
+		--lp-inner-padding: 36px;
 	}
 
 	.lp-popup--heart .lp-popup__inner::before {
-		width: 120%;
-		padding-bottom: 120%;
+		width: 140%;
+		padding-bottom: 135%;
+	}
+
+	.lp-popup--heart .lp-popup__close {
+		right: calc(-20% + 20px);
+	}
+}
+
+/* Small tablet / large mobile - transition to vw-based sizing */
+@media (max-width: 750px) {
+	.lp-popup--heart {
+		--lp-max-width: 100vw;
+		overflow: hidden;
+	}
+
+	.lp-popup--heart .lp-popup__inner::before {
+		width: 105vw;
+		padding-bottom: 100vw;
+	}
+
+	.lp-popup--heart .lp-popup__close {
+		right: 12px;
+		top: 20px;
+	}
+}
+
+/* Mobile adjustments for heart - full width with intentional side overflow */
+@media (max-width: 600px) {
+	.lp-popup--heart {
+		--lp-max-width: 100vw;
+		--lp-content-width: clamp(200px, 75vw, 260px);
+		--lp-inner-padding: 16px;
+		overflow: hidden; /* Clip overflowing heart sides */
+	}
+
+	.lp-popup--heart .lp-popup__inner {
+		padding: calc(var(--lp-inner-padding) + 24px) var(--lp-inner-padding) var(--lp-inner-padding);
+		min-height: 260px;
+		overflow: visible;
+	}
+
+	.lp-popup--heart .lp-popup__inner::before {
+		width: 110vw;
+		padding-bottom: 105vw;
+	}
+
+	.lp-popup--heart .lp-popup__close {
+		right: 8px;
+		top: 16px;
+		width: 36px;
+		height: 36px;
+	}
+
+	.lp-popup--heart .lp-popup__content {
+		font-size: 0.9rem;
+	}
+}
+
+/* Small mobile - use min-height for taller heart with more side clipping */
+@media (max-width: 500px) {
+	.lp-popup--heart .lp-popup__inner::before {
+		width: auto;
+		min-height: 80vh;
+		padding-bottom: 0;
+		aspect-ratio: 800 / 600;
+		top: calc(50% + 60px);
+		left: 50%;
+		transform: translate(-50%, -50%);
 	}
 }
