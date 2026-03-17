@@ -29,6 +29,7 @@ jobs:
       - name: Create release zip
         run: |
           mkdir -p build/light-popup
+          mkdir -p build/light-popup/languages
           
           # Copy plugin files
           cp light-popup.php build/light-popup/
@@ -36,8 +37,10 @@ jobs:
           cp README.md build/light-popup/
           cp -r src build/light-popup/
           cp -r assets build/light-popup/
-          cp -r languages build/light-popup/
           cp -r vendor build/light-popup/
+          
+          # Copy language files if they exist
+          [ -d languages ] && cp -r languages/* build/light-popup/languages/ 2>/dev/null || true
           
           # Remove dev files from vendor
           rm -rf build/light-popup/vendor/bin
