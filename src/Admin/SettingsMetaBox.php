@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use Robothead\LightPopup\Domain\TemplateRegistry;
+
 class SettingsMetaBox {
 
 	public function register(): void {
@@ -41,6 +43,9 @@ class SettingsMetaBox {
 		$gdpr_checkbox         = get_post_meta( $post->ID, '_lp_gdpr_checkbox', true );
 		$gdpr_label            = get_post_meta( $post->ID, '_lp_gdpr_checkbox_label', true ) ?: '';
 		$custom_css            = get_post_meta( $post->ID, '_lp_custom_css', true ) ?: '';
+		$template              = get_post_meta( $post->ID, '_lp_template', true ) ?: '';
+		$template_settings     = get_post_meta( $post->ID, '_lp_template_settings', true );
+		$template_settings     = is_array( $template_settings ) ? $template_settings : [];
 
 		// Default to checked (1) for new posts.
 		if ( '' === $show_on_mobile ) {
@@ -187,6 +192,42 @@ class SettingsMetaBox {
 					<label class="lp-settings__label"><?php esc_html_e( 'Checkbox label', 'light-popup' ); ?></label>
 					<input type="text" name="lp_gdpr_checkbox_label" value="<?php echo esc_attr( $gdpr_label ); ?>" class="widefat" placeholder="<?php esc_attr_e( 'I agree to the privacy policy.', 'light-popup' ); ?>">
 				</div>
+			</div>
+
+			<hr>
+
+			<?php /* Template */ ?>
+			<div class="lp-settings__section">
+				<p class="lp-settings__heading"><?php esc_html_e( 'Template', 'light-popup' ); ?></p>
+				<select name="lp_template" id="lp_template" class="widefat">
+					<?php foreach ( TemplateRegistry::get_choices() as $value => $label ) : ?>
+						<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $value, $template ); ?>><?php echo esc_html( $label ); ?></option>
+					<?php endforeach; ?>
+				</select>
+
+				<?php // Render settings for each template (shown/hidden via JS). ?>
+				<?php foreach ( TemplateRegistry::get_templates() as $tpl_id => $tpl_data ) :
+					$schema = $tpl_data['settings'] ?? [];
+					if ( empty( $schema ) ) {
+						continue;
+					}
+					$is_current = ( $template === $tpl_id );
+				?>
+				<div id="lp_template_settings_<?php echo esc_attr( $tpl_id ); ?>" class="lp-template-settings" style="<?php echo $is_current ? '' : 'display:none;'; ?>">
+					<?php foreach ( $schema as $setting_key => $setting ) :
+						$saved_value = $template_settings[ $setting_key ] ?? $setting['default'];
+					?>
+					<div class="lp-settings__field">
+						<label class="lp-settings__label"><?php echo esc_html( $setting['label'] ); ?></label>
+						<?php if ( 'color' === $setting['type'] ) : ?>
+							<input type="text" name="lp_template_settings[<?php echo esc_attr( $setting_key ); ?>]" value="<?php echo esc_attr( $saved_value ); ?>" class="lp-color-picker" data-default-color="<?php echo esc_attr( $setting['default'] ); ?>">
+						<?php else : ?>
+							<input type="text" name="lp_template_settings[<?php echo esc_attr( $setting_key ); ?>]" value="<?php echo esc_attr( $saved_value ); ?>" class="widefat">
+						<?php endif; ?>
+					</div>
+					<?php endforeach; ?>
+				</div>
+				<?php endforeach; ?>
 			</div>
 
 			<hr>

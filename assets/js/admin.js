@@ -76,5 +76,33 @@
 			gdprCheckbox.addEventListener( 'change', updateGdpr );
 			updateGdpr();
 		}
+
+		// Template settings toggle.
+		var templateSelect = document.getElementById( 'lp_template' );
+
+		function updateTemplateSettings() {
+			if ( ! templateSelect ) return;
+			var val = templateSelect.value;
+			var allSettings = document.querySelectorAll( '.lp-template-settings' );
+			allSettings.forEach( function ( el ) {
+				el.style.display = 'none';
+			} );
+			if ( val ) {
+				var currentSettings = document.getElementById( 'lp_template_settings_' + val );
+				if ( currentSettings ) {
+					currentSettings.style.display = '';
+				}
+			}
+		}
+
+		if ( templateSelect ) {
+			templateSelect.addEventListener( 'change', updateTemplateSettings );
+			updateTemplateSettings();
+		}
+
+		// Initialize WordPress color pickers.
+		if ( typeof jQuery !== 'undefined' && jQuery.fn.wpColorPicker ) {
+			jQuery( '.lp-color-picker' ).wpColorPicker();
+		}
 	} );
 } )();

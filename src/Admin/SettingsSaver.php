@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use Robothead\LightPopup\Domain\PopupRepository;
+use Robothead\LightPopup\Domain\TemplateRegistry;
 
 class SettingsSaver {
 
@@ -86,6 +87,34 @@ class SettingsSaver {
 		// Custom CSS: strip HTML tags to prevent injection; keep valid CSS characters.
 		$custom_css = isset( $_POST['lp_custom_css'] ) ? wp_strip_all_tags( wp_unslash( $_POST['lp_custom_css'] ) ) : '';
 		$this->save_meta( $post_id, '_lp_custom_css', $custom_css );
+
+		// Template: validate against registered templates.
+		$template = isset( $_POST['lp_template'] ) ? sanitize_text_field( wp_unslash( $_POST['lp_template'] ) ) : '';
+		if ( ! TemplateRegistry::is_valid( $template ) ) {
+			$template = '';
+		}
+		$this->save_meta( $post_id, '_lp_template', $template );
+
+		// Template settings: validate and sanitize based on schema.
+		$template_settings = [];
+		if ( ! empty( $template ) ) {
+			$schema = TemplateRegistry::get_settings_schema( $template );
+			$submitted_settings = isset( $_POST['lp_template_settings'] ) && is_array( $_POST['lp_template_settings'] )
+				? wp_unslash( $_POST['lp_template_settings'] )
+				: [];
+
+			foreach ( $schema as $key => $setting ) {
+				if ( isset( $submitted_settings[ $key ] ) ) {
+					$value = sanitize_text_field( $submitted_settings[ $key ] );
+					// For color type, validate hex format.
+					if ( 'color' === $setting['type'] ) {
+						$value = preg_match( '/^#[a-fA-F0-9]{6}$/', $value ) ? $value : $setting['default'];
+					}
+					$template_settings[ $key ] = $value;
+				}
+			}
+		}
+		update_post_meta( $post_id, '_lp_template_settings', $template_settings );
 
 		PopupRepository::flush_cache();
 	}

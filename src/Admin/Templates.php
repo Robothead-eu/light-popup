@@ -144,6 +144,30 @@ class Templates {
 					'_lp_custom_css'             => '--lp-max-width: 720px; --lp-radius: 0;',
 				],
 			],
+			[
+				'id'          => 'heart',
+				'name'        => 'Heart',
+				'description' => 'Big green heart-shaped popup. Perfect for love-themed promotions or Valentine\'s campaigns.',
+				'content'     => "<h2>We love you!</h2>\n<p>Thank you for being part of our community.</p>",
+				'meta'        => [
+					'_lp_enabled'               => '0',
+					'_lp_trigger_type'           => 'time_delay',
+					'_lp_trigger_value'          => '3',
+					'_lp_trigger_secondary_type' => '',
+					'_lp_trigger_secondary_value' => '',
+					'_lp_targeting_type'         => 'all',
+					'_lp_targeting_ids'          => '',
+					'_lp_targeting_post_types'   => '',
+					'_lp_frequency'              => 'session',
+					'_lp_show_on_mobile'         => '1',
+					'_lp_show_on_desktop'        => '1',
+					'_lp_close_on_backdrop'      => '1',
+					'_lp_gdpr_checkbox'          => '0',
+					'_lp_gdpr_checkbox_label'    => '',
+					'_lp_template'               => 'heart',
+					'_lp_custom_css'             => '',
+				],
+			],
 		];
 	}
 
@@ -252,7 +276,7 @@ class Templates {
 			'_lp_targeting_type', '_lp_targeting_ids', '_lp_targeting_post_types',
 			'_lp_frequency', '_lp_show_on_mobile', '_lp_show_on_desktop',
 			'_lp_close_on_backdrop', '_lp_gdpr_checkbox', '_lp_gdpr_checkbox_label',
-			'_lp_custom_css',
+			'_lp_custom_css', '_lp_template',
 		];
 
 		$meta = [];
@@ -294,7 +318,7 @@ class Templates {
 			'_lp_targeting_type', '_lp_targeting_ids', '_lp_targeting_post_types',
 			'_lp_frequency', '_lp_show_on_mobile', '_lp_show_on_desktop',
 			'_lp_close_on_backdrop', '_lp_gdpr_checkbox', '_lp_gdpr_checkbox_label',
-			'_lp_custom_css',
+			'_lp_custom_css', '_lp_template',
 		];
 
 		$meta = [];
@@ -351,7 +375,7 @@ class Templates {
 			'_lp_targeting_type', '_lp_targeting_ids', '_lp_targeting_post_types',
 			'_lp_frequency', '_lp_show_on_mobile', '_lp_show_on_desktop',
 			'_lp_close_on_backdrop', '_lp_gdpr_checkbox', '_lp_gdpr_checkbox_label',
-			'_lp_custom_css',
+			'_lp_custom_css', '_lp_template',
 		];
 
 		$meta = [];

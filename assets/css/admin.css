@@ -2,10 +2,22 @@
    Sidebar settings panel
 ----------------------------------------------- */
 
+.lp-settings {
+	max-width: 100%;
+	overflow: hidden;
+}
+
 .lp-settings hr {
 	margin: 12px 0;
 	border: none;
 	border-top: 1px solid #dcdcde;
+}
+
+.lp-settings select,
+.lp-settings input[type="text"],
+.lp-settings textarea {
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 .lp-settings__heading {
@@ -185,4 +197,117 @@
 	margin: 32px 0;
 	border: none;
 	border-top: 1px solid #dcdcde;
+}
+
+/* -----------------------------------------------
+   Template settings in meta box
+----------------------------------------------- */
+
+.lp-template-settings {
+	margin-top: 12px;
+	padding: 12px;
+	background: #f6f7f7;
+	border-radius: 4px;
+}
+
+.lp-template-settings .lp-settings__field {
+	margin-top: 8px;
+}
+
+.lp-template-settings .lp-settings__field:first-child {
+	margin-top: 0;
+}
+
+/* WordPress color picker wrapper */
+.lp-template-settings .wp-picker-container {
+	width: 100%;
+}
+
+.lp-template-settings .wp-picker-container .wp-color-result {
+	height: 30px;
+	margin: 0;
+}
+
+/* Keep color picker inside sidebar */
+.lp-template-settings .wp-picker-holder {
+	position: absolute;
+	right: 0;
+	left: auto;
+	z-index: 100;
+}
+
+.lp-template-settings .iris-picker {
+	max-width: 100%;
+}
+
+/* -----------------------------------------------
+   About page
+----------------------------------------------- */
+
+.lp-about-page__content {
+	max-width: 800px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	padding: 24px;
+	margin-top: 20px;
+}
+
+.lp-about-page__section {
+	margin-bottom: 24px;
+	padding-bottom: 24px;
+	border-bottom: 1px solid #f0f0f1;
+}
+
+.lp-about-page__section:last-child {
+	margin-bottom: 0;
+	padding-bottom: 0;
+	border-bottom: none;
+}
+
+.lp-about-page__section h2 {
+	margin-top: 0;
+	margin-bottom: 12px;
+	font-size: 16px;
+}
+
+.lp-about-page__section ul {
+	margin: 0;
+	padding-left: 20px;
+}
+
+.lp-about-page__section li {
+	margin-bottom: 6px;
+}
+
+.lp-about-page__section pre {
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	padding: 16px;
+	overflow-x: auto;
+	font-size: 12px;
+	line-height: 1.5;
+}
+
+.lp-about-page__section code {
+	font-family: Consolas, Monaco, monospace;
+}
+
+.lp-about-page__section--meta {
+	background: #f9f9f9;
+	padding: 16px;
+	border-radius: 4px;
+	margin: -24px;
+	margin-top: 24px;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.lp-about-page__section--meta p {
+	margin: 0 0 6px;
+}
+
+.lp-about-page__section--meta p:last-child {
+	margin-bottom: 0;
 }

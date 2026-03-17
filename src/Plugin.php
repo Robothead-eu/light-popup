@@ -6,9 +6,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use Robothead\LightPopup\Admin\About;
 use Robothead\LightPopup\Admin\Assets;
+use Robothead\LightPopup\Admin\ClassicEditorOverride;
 use Robothead\LightPopup\Admin\ListTable;
 use Robothead\LightPopup\Admin\Menu;
+use Robothead\LightPopup\Admin\Settings;
 use Robothead\LightPopup\Admin\Templates;
 use Robothead\LightPopup\Admin\SettingsMetaBox;
 use Robothead\LightPopup\Admin\SettingsSaver;
@@ -23,12 +26,17 @@ class Plugin {
 
 		if ( is_admin() ) {
 			$templates = new Templates();
+			$settings  = new Settings();
+			$about     = new About();
+
 			$templates->register();
-			( new Menu( $templates ) )->register();
+			$settings->register();
+			( new Menu( $templates, $settings, $about ) )->register();
 			( new SettingsMetaBox() )->register();
 			( new SettingsSaver() )->register();
 			( new Assets() )->register();
 			( new ListTable() )->register();
+			( new ClassicEditorOverride() )->register();
 		}
 
 		if ( ! is_admin() ) {

@@ -16,10 +16,12 @@ class Assets {
 	public function enqueue( string $hook ): void {
 		$screen = get_current_screen();
 
-		$is_lp_screen = $screen && 'light_popup' === $screen->post_type;
-		$is_templates = $screen && 'light_popup_page_light-popup-templates' === $screen->id;
+		$is_lp_screen  = $screen && 'light_popup' === $screen->post_type;
+		$is_templates  = $screen && 'light_popup_page_light-popup-templates' === $screen->id;
+		$is_settings   = $screen && 'light_popup_page_light-popup-settings' === $screen->id;
+		$is_about      = $screen && 'light_popup_page_light-popup-about' === $screen->id;
 
-		if ( ! $is_lp_screen && ! $is_templates ) {
+		if ( ! $is_lp_screen && ! $is_templates && ! $is_settings && ! $is_about ) {
 			return;
 		}
 
@@ -31,10 +33,13 @@ class Assets {
 		);
 
 		if ( in_array( $hook, [ 'post.php', 'post-new.php' ], true ) ) {
+			// WordPress color picker.
+			wp_enqueue_style( 'wp-color-picker' );
+
 			wp_enqueue_script(
 				'light-popup-admin',
 				LIGHT_POPUP_URL . 'assets/js/admin.js',
-				[],
+				[ 'wp-color-picker' ],
 				LIGHT_POPUP_VERSION,
 				true
 			);
