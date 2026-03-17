@@ -1,0 +1,60 @@
+name: Build Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --no-dev --optimize-autoloader --no-interaction
+
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Create release zip
+        run: |
+          mkdir -p build/light-popup
+          
+          # Copy plugin files
+          cp light-popup.php build/light-popup/
+          cp uninstall.php build/light-popup/
+          cp README.md build/light-popup/
+          cp -r src build/light-popup/
+          cp -r assets build/light-popup/
+          cp -r languages build/light-popup/
+          cp -r vendor build/light-popup/
+          
+          # Remove dev files from vendor
+          rm -rf build/light-popup/vendor/bin
+          rm -rf build/light-popup/vendor/squizlabs
+          rm -rf build/light-popup/vendor/wp-coding-standards
+          
+          # Remove .gitkeep files
+          find build/light-popup -name ".gitkeep" -delete
+          
+          # Create zip
+          cd build
+          zip -r light-popup-${{ steps.version.outputs.VERSION }}.zip light-popup
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: build/light-popup-${{ steps.version.outputs.VERSION }}.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
