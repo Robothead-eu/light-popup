@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Light Popup
  * Description: Lightweight, privacy-first WordPress popup plugin.
- * Version:     1.0.0
+ * Version:     0.1.0
  * Author:      Robothead
  * Author URI:  https://lightpopup.com
  * Text Domain: light-popup
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LIGHT_POPUP_VERSION', '1.0.0' );
+define( 'LIGHT_POPUP_VERSION', '0.1.0' );
 define( 'LIGHT_POPUP_FILE', __FILE__ );
 define( 'LIGHT_POPUP_DIR', plugin_dir_path( __FILE__ ) );
 define( 'LIGHT_POPUP_URL', plugin_dir_url( __FILE__ ) );
