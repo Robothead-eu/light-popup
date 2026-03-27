@@ -35,7 +35,7 @@ class SettingsSaver {
 
 		$this->save_meta( $post_id, '_lp_enabled', isset( $_POST['lp_enabled'] ) ? '1' : '0' );
 
-		$allowed_trigger_types = [ 'time_delay', 'scroll_depth', 'exit_intent', 'click' ];
+		$allowed_trigger_types = [ 'time_delay', 'scroll_depth', 'exit_intent', 'click', 'url_param' ];
 
 		$trigger_type = isset( $_POST['lp_trigger_type'] ) ? sanitize_text_field( wp_unslash( $_POST['lp_trigger_type'] ) ) : 'time_delay';
 		if ( ! in_array( $trigger_type, $allowed_trigger_types, true ) ) {

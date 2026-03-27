@@ -6,6 +6,7 @@
 		scroll_depth: { label: 'Scroll depth (%)', hint: 'e.g. 50' },
 		exit_intent:  { label: '', hint: '' },
 		click:        { label: 'CSS selector', hint: 'e.g. #my-button or .open-popup' },
+		url_param:    { label: 'URL parameter', hint: 'e.g. code or code=101 (bypasses frequency)' },
 	};
 
 	function updateTriggerField( selectEl, valueWrapId, valueLabelId, valueHintId ) {

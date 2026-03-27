@@ -252,6 +252,7 @@ class SettingsMetaBox {
 			'scroll_depth' => __( 'Scroll depth', 'light-popup' ),
 			'exit_intent'  => __( 'Exit intent', 'light-popup' ),
 			'click'        => __( 'Click on element', 'light-popup' ),
+			'url_param'    => __( 'URL parameter', 'light-popup' ),
 		];
 		foreach ( $options as $value => $label ) {
 			printf(

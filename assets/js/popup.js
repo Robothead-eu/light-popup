@@ -37,10 +37,10 @@
 
 	// --- Show / close ---
 
-	function showPopup( popup ) {
+	function showPopup( popup, bypassFrequency ) {
 		if ( ! popup.showOnDesktop && ! isMobile ) return;
 		if ( ! popup.showOnMobile  &&   isMobile ) return;
-		if ( hasShown( popup ) ) return;
+		if ( ! bypassFrequency && hasShown( popup ) ) return;
 
 		var dialog = document.getElementById( 'lp-popup-' + popup.id );
 		if ( ! dialog ) return;
@@ -119,6 +119,29 @@
 				}
 				document.addEventListener( 'click', onClick );
 				cleanups.push( function () { document.removeEventListener( 'click', onClick ); } );
+
+			} else if ( 'url_param' === cfg.type ) {
+				// Value format: "code" or "code=101"
+				var paramSpec = cfg.value || '';
+				if ( ! paramSpec ) return;
+
+				var parts       = paramSpec.split( '=' );
+				var paramName   = parts[0];
+				var paramExpect = parts[1] || null;
+
+				var params   = new URLSearchParams( window.location.search );
+				var paramVal = params.get( paramName );
+
+				if ( paramVal !== null ) {
+					// Param exists - check value if specified.
+					if ( ! paramExpect || paramVal === paramExpect ) {
+						// Bypass frequency for URL param trigger.
+						if ( triggered ) return;
+						triggered = true;
+						cleanups.forEach( function ( fn ) { fn(); } );
+						showPopup( popup, true );
+					}
+				}
 			}
 		}
 
