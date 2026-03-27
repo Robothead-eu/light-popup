@@ -198,7 +198,7 @@ class Loader {
 			<div class="lp-popup__inner">
 				<button class="lp-popup__close" aria-label="<?php esc_attr_e( 'Close popup', 'light-popup' ); ?>">&times;</button>
 				<div class="lp-popup__content">
-					<?php echo wp_kses_post( $content ); ?>
+					<?php echo wp_kses( $content, $this->get_allowed_popup_html() ); ?>
 				</div>
 				<?php if ( '1' === $gdpr ) : ?>
 				<label class="lp-popup__gdpr">
@@ -209,5 +209,111 @@ class Loader {
 			</div>
 		</dialog>
 		<?php
+	}
+
+	/**
+	 * Get allowed HTML tags for popup content, including form elements.
+	 *
+	 * @return array<string, array<string, bool>>
+	 */
+	private function get_allowed_popup_html(): array {
+		$allowed = wp_kses_allowed_html( 'post' );
+
+		// Add form elements.
+		$form_elements = [
+			'form'     => [
+				'action'       => true,
+				'method'       => true,
+				'name'         => true,
+				'id'           => true,
+				'class'        => true,
+				'target'       => true,
+				'enctype'      => true,
+				'autocomplete' => true,
+				'novalidate'   => true,
+			],
+			'input'    => [
+				'type'         => true,
+				'name'         => true,
+				'value'        => true,
+				'id'           => true,
+				'class'        => true,
+				'placeholder'  => true,
+				'required'     => true,
+				'checked'      => true,
+				'disabled'     => true,
+				'readonly'     => true,
+				'maxlength'    => true,
+				'minlength'    => true,
+				'min'          => true,
+				'max'          => true,
+				'step'         => true,
+				'pattern'      => true,
+				'autocomplete' => true,
+				'aria-label'   => true,
+				'aria-describedby' => true,
+				'size'         => true,
+				'style'        => true,
+			],
+			'textarea' => [
+				'name'        => true,
+				'id'          => true,
+				'class'       => true,
+				'rows'        => true,
+				'cols'        => true,
+				'placeholder' => true,
+				'required'    => true,
+				'disabled'    => true,
+				'readonly'    => true,
+				'maxlength'   => true,
+				'style'       => true,
+			],
+			'select'   => [
+				'name'     => true,
+				'id'       => true,
+				'class'    => true,
+				'required' => true,
+				'disabled' => true,
+				'multiple' => true,
+				'size'     => true,
+				'style'    => true,
+			],
+			'option'   => [
+				'value'    => true,
+				'selected' => true,
+				'disabled' => true,
+			],
+			'optgroup' => [
+				'label'    => true,
+				'disabled' => true,
+			],
+			'button'   => [
+				'type'     => true,
+				'name'     => true,
+				'value'    => true,
+				'id'       => true,
+				'class'    => true,
+				'disabled' => true,
+				'style'    => true,
+			],
+			'label'    => [
+				'for'   => true,
+				'class' => true,
+				'id'    => true,
+				'style' => true,
+			],
+			'fieldset' => [
+				'class'    => true,
+				'id'       => true,
+				'disabled' => true,
+				'name'     => true,
+			],
+			'legend'   => [
+				'class' => true,
+				'id'    => true,
+			],
+		];
+
+		return array_merge( $allowed, $form_elements );
 	}
 }

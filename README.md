@@ -4,6 +4,8 @@ Displays popups in WordPress. Content is built in the block editor.
 Triggers, targeting, and frequency are configured per popup. 
 No external requests, no tracking, no jQuery.
 
+https://lightpopup.com
+
 ## What it does
 
 - Trigger types: time delay, scroll depth, exit intent, click on CSS selector
