@@ -100,7 +100,7 @@ class SettingsSaver {
 		if ( ! empty( $template ) ) {
 			$schema = TemplateRegistry::get_settings_schema( $template );
 			$submitted_settings = isset( $_POST['lp_template_settings'] ) && is_array( $_POST['lp_template_settings'] )
-				? wp_unslash( $_POST['lp_template_settings'] )
+				? array_map( 'sanitize_text_field', wp_unslash( $_POST['lp_template_settings'] ) )
 				: [];
 
 			foreach ( $schema as $key => $setting ) {

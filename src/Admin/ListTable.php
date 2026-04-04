@@ -98,7 +98,7 @@ class ListTable {
 			case 'lp_shortcode':
 				printf(
 					'<code>[light_popup id="%d"]...[/light_popup]</code>',
-					$post_id
+					intval($post_id)
 				);
 				break;
 		}

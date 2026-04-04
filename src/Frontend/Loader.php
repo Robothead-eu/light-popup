@@ -166,7 +166,7 @@ class Loader {
 		}
 
 		// Render content through the block editor and shortcode pipeline.
-		$content = apply_filters( 'the_content', $post->post_content );
+		$content = apply_filters( 'the_content', $post->post_content ); //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Not a plugin hook name, ignore 
 		$content = do_shortcode( $content );
 
 		// Build inline styles from template settings.

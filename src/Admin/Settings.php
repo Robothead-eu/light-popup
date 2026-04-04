@@ -49,7 +49,7 @@ class Settings {
 	 */
 	public function render_page(): void {
 		$options = Options::get_all();
-		$updated = isset( $_GET['settings-updated'] ) && 'true' === $_GET['settings-updated'];
+		$updated = isset( $_GET['settings-updated'] ) && 'true' === $_GET['settings-updated']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only flag set by our own redirect, no action taken
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Light Popup Settings', 'light-popup' ); ?></h1>
