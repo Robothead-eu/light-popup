@@ -166,8 +166,20 @@ class Loader {
 		}
 
 		// Render content through the block editor and shortcode pipeline.
+		// Temporarily promote the popup to the global post so that filters hooked
+		// to 'the_content' (notably page builders such as Elementor) operate on
+		// the popup's own content instead of replacing it with the current page's
+		// content. We use $GLOBALS['post'] rather than `global $post` to avoid
+		// clobbering the $post parameter, which already holds the popup.
+		$previous_post   = $GLOBALS['post'] ?? null;
+		$GLOBALS['post'] = $post;
+		setup_postdata( $post );
+
 		$content = apply_filters( 'the_content', $post->post_content );
 		$content = do_shortcode( $content );
+
+		$GLOBALS['post'] = $previous_post;
+		wp_reset_postdata();
 
 		// Build inline styles from template settings.
 		$inline_styles = '';
